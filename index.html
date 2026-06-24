@@ -1215,6 +1215,142 @@
       .hero-grid > .hero-photo-wrap { order: -1; }
       #hero { padding-top: 70px; }
     }
+
+    /* ============================================================
+       MODAL DE INSCRIÇÃO
+    ============================================================ */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #modal-overlay.open { display: flex; }
+
+    #modal-box {
+      background: var(--bg-base);
+      border: 1px solid var(--gold-border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 480px;
+      padding: 40px 36px 36px;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.45), var(--gold-glow);
+      animation: modalIn 0.28s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    #modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--text-muted);
+      opacity: 0.55;
+      transition: opacity var(--t);
+      padding: 4px 8px;
+    }
+    #modal-close:hover { opacity: 1; }
+
+    .modal-eyebrow {
+      font-family: var(--ff-label);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .modal-title {
+      font-family: var(--ff-heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .modal-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+
+    .modal-field {
+      margin-bottom: 16px;
+    }
+    .modal-field label {
+      display: block;
+      font-family: var(--ff-label);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+    .modal-field input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid var(--gold-border);
+      border-radius: 10px;
+      background: #fff;
+      font-family: var(--ff-body);
+      font-size: 15px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .modal-field input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+    }
+    .modal-field input::placeholder { color: #bbb; }
+
+    #modal-btn {
+      width: 100%;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+    #modal-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    #modal-feedback {
+      margin-top: 14px;
+      font-size: 13px;
+      text-align: center;
+      min-height: 20px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+    #modal-feedback.error { color: #c0392b; }
+    #modal-feedback.success { color: #27ae60; }
+
+    .modal-lock {
+      font-size: 11px;
+      color: var(--text-faint);
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 520px) {
+      #modal-box { padding: 32px 20px 28px; }
+      .modal-title { font-size: 19px; }
+    }
   </style>
 </head>
 <body>
@@ -1233,11 +1369,9 @@
           <a href="#data-local" class="nav-link">Data e Local</a>
           <a href="#francisco"  class="nav-link">Sobre</a>
           <a href="#faq"        class="nav-link">FAQ</a>
-          <a href="https://wa.me/5511999999999?text=Quero+garantir+minha+vaga+no+curso+de+Alisamentos+e+Desprogressivas"
-             class="btn btn--primary nav-btn"
-             target="_blank" rel="noopener noreferrer">
+          <button class="btn btn--primary nav-btn" onclick="abrirModal()">
             Garantir minha vaga
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -1273,12 +1407,10 @@
             </p>
 
             <div class="hero-cta-wrap reveal rd3">
-              <a href="https://wa.me/5511999999999?text=Quero+garantir+minha+vaga+no+curso+de+Alisamentos+e+Desprogressivas"
-                 class="btn btn--primary"
-                 target="_blank" rel="noopener noreferrer">
+              <button class="btn btn--primary" onclick="abrirModal()">
                 Garantir minha vaga agora
                 <span class="btn-icon" aria-hidden="true">→</span>
-              </a>
+              </button>
               <p class="cta-note">🔒 Vagas limitadas</p>
             </div>
 
@@ -1405,12 +1537,10 @@
             </div>
 
             <div class="mt10 reveal rd3">
-              <a href="https://wa.me/5511999999999?text=Quero+saber+mais+sobre+o+conteúdo+do+curso+de+Alisamentos"
-                 class="btn btn--primary"
-                 target="_blank" rel="noopener noreferrer">
+              <button class="btn btn--primary" onclick="abrirModal()">
                 Quero garantir minha vaga
                 <span class="btn-icon" aria-hidden="true">→</span>
-              </a>
+              </button>
             </div>
         </div>
       </div>
@@ -1470,12 +1600,10 @@
             </div>
 
             <div class="mt10 reveal rd4">
-              <a href="https://wa.me/5511999999999?text=Quero+participar+do+curso+e+receber+meu+certificado"
-                 class="btn btn--ghost"
-                 target="_blank" rel="noopener noreferrer">
+              <button class="btn btn--ghost" onclick="abrirModal()">
                 Quero meu certificado
                 <span class="btn-icon" aria-hidden="true">→</span>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -1623,12 +1751,10 @@
             </div>
 
             <div class="mt8 reveal rd3">
-              <a href="https://wa.me/5511999999999?text=Quero+confirmar+minha+vaga+no+treinamento+de+Alisamentos"
-                 class="btn btn--primary"
-                 target="_blank" rel="noopener noreferrer">
+              <button class="btn btn--primary" onclick="abrirModal()">
                 Confirmar minha vaga agora
                 <span class="btn-icon" aria-hidden="true">→</span>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -1813,12 +1939,10 @@
             </div>
 
             <div class="mt10 reveal rd4">
-              <a href="https://wa.me/5511999999999?text=Quero+aprender+com+o+Francisco+Costa"
-                 class="btn btn--primary"
-                 target="_blank" rel="noopener noreferrer">
+              <button class="btn btn--primary" onclick="abrirModal()">
                 Quero aprender com Francisco Costa
                 <span class="btn-icon" aria-hidden="true">→</span>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -1879,13 +2003,11 @@
         </p>
  
         <div class="tc mt12 reveal rd3">
-          <a href="https://wa.me/5511999999999?text=Assisti+ao+vídeo+e+quero+garantir+minha+vaga+no+treinamento"
-             class="btn btn--primary"
-             target="_blank" rel="noopener noreferrer"
+          <button class="btn btn--primary" onclick="abrirModal()"
              style="padding:20px 52px;">
             Quero garantir minha vaga agora
             <span class="btn-icon" aria-hidden="true">→</span>
-          </a>
+          </button>
           <p class="cta-note mt4">
             🔒 Vagas limitadas
           </p>
@@ -1899,6 +2021,46 @@
   <!-- ============================================================
        FOOTER
   ============================================================ -->
+
+  <!-- ============================================================
+       MODAL DE INSCRIÇÃO — disparado por todos os CTAs
+  ============================================================ -->
+  <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div id="modal-box">
+
+      <button id="modal-close" aria-label="Fechar">✕</button>
+
+      <span class="modal-eyebrow">Inscrição</span>
+      <h2 class="modal-title" id="modal-titulo">Garantir minha vaga</h2>
+      <p class="modal-subtitle">Preencha seus dados para acessar o pagamento seguro.</p>
+
+      <div class="modal-field">
+        <label for="m-nome">Nome completo</label>
+        <input id="m-nome" type="text" placeholder="Seu nome completo" required autocomplete="name">
+      </div>
+
+      <div class="modal-field">
+        <label for="m-email">E-mail</label>
+        <input id="m-email" type="email" placeholder="seu@email.com" required autocomplete="email">
+      </div>
+
+      <div class="modal-field">
+        <label for="m-cpf">CPF <span style="font-weight:400;opacity:.6;">(somente números)</span></label>
+        <input id="m-cpf" type="text" placeholder="00000000000" maxlength="14" inputmode="numeric" autocomplete="off">
+      </div>
+
+      <button id="modal-btn" class="btn btn--primary" type="button">
+        Ir para o pagamento
+        <span class="btn-icon" aria-hidden="true">→</span>
+      </button>
+
+      <div id="modal-feedback" aria-live="polite"></div>
+
+      <p class="modal-lock">🔒 Pagamento processado com segurança pelo Mercado Pago</p>
+
+    </div>
+  </div>
+
   <footer>
     <div class="container">
       <p class="footer-disc">
@@ -1911,12 +2073,10 @@
        STICKY BAR — MOBILE
   ============================================================ -->
   <div id="sticky-bar" aria-hidden="true">
-    <a href="https://wa.me/5511999999999?text=Quero+garantir+minha+vaga+no+treinamento+de+Alisamentos"
-       class="btn btn--primary btn--full"
-       target="_blank" rel="noopener noreferrer">
+    <button class="btn btn--primary btn--full" onclick="abrirModal()">
       📲 Garantir minha vaga agora
       <span class="btn-icon" aria-hidden="true">→</span>
-    </a>
+    </button>
   </div>
 
 
@@ -2098,6 +2258,137 @@
         overlay.classList.remove('hidden');
         }
     });
+    }());
+
+
+
+    /* ----------------------------------------------------------
+       8. MODAL DE INSCRIÇÃO — doGet → Mercado Pago
+    ---------------------------------------------------------- */
+    (function () {
+      // ── Configuração ──────────────────────────────────────────
+      var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx5E0Z9wtwGh1iqfh0mqmewBWMsntHK-rwkktIYEP2Es6LgFsV_UV8Mz7DUHMeLspbI/exec';
+      var LP_API_KEY      = 'a3f7c91b204e8d5f6a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d'; // igual ao LP_API_KEY nas Script Properties
+
+      // ── Elementos ─────────────────────────────────────────────
+      var overlay  = document.getElementById('modal-overlay');
+      var box      = document.getElementById('modal-box');
+      var btnClose = document.getElementById('modal-close');
+      var btnEnviar= document.getElementById('modal-btn');
+      var feedback = document.getElementById('modal-feedback');
+      var fNome    = document.getElementById('m-nome');
+      var fEmail   = document.getElementById('m-email');
+      var fCpf     = document.getElementById('m-cpf');
+
+      // ── Máscara de CPF ────────────────────────────────────────
+      fCpf.addEventListener('input', function () {
+        var v = fCpf.value.replace(/\D/g, '').substring(0, 11);
+        if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
+        else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+        else if (v.length > 3) v = v.replace(/(\d{3})(\d{0,3})/, '$1.$2');
+        fCpf.value = v;
+      });
+
+      // ── Abrir modal ───────────────────────────────────────────
+      window.abrirModal = function () {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        fNome.focus();
+        resetFeedback();
+      };
+
+      // ── Fechar modal ──────────────────────────────────────────
+      function fecharModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      btnClose.addEventListener('click', fecharModal);
+
+      // Fecha ao clicar fora do box
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) fecharModal();
+      });
+
+      // Fecha com ESC
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) fecharModal();
+      });
+
+      // ── Submeter formulário ───────────────────────────────────
+      btnEnviar.addEventListener('click', function () {
+        var nome  = fNome.value.trim();
+        var email = fEmail.value.trim();
+        var cpf   = fCpf.value.replace(/\D/g, '');
+
+        // Validação básica
+        if (!nome) {
+          setFeedback('Por favor, preencha seu nome completo.', 'error');
+          fNome.focus(); return;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setFeedback('Por favor, informe um e-mail válido.', 'error');
+          fEmail.focus(); return;
+        }
+        if (cpf && cpf.length !== 11) {
+          setFeedback('CPF inválido. Verifique os dados.', 'error');
+          fCpf.focus(); return;
+        }
+
+        // Estado de loading
+        btnEnviar.disabled    = true;
+        btnEnviar.textContent = 'Gerando link seguro...';
+        setFeedback('⏳ Conectando ao sistema de pagamento...', '');
+
+        // Monta a requisição ao Apps Script (doGet)
+        var params = new URLSearchParams({
+          nome:   nome,
+          email:  email,
+          cpf:    cpf,
+          apikey: LP_API_KEY
+        });
+
+        fetch(APPS_SCRIPT_URL + '?' + params.toString())
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (data.ok && data.url) {
+              setFeedback('✅ Link gerado! Redirecionando...', 'success');
+              // Aguarda 800ms para o usuário ler o feedback antes de redirecionar
+              setTimeout(function () {
+                window.location.href = data.url;
+              }, 800);
+            } else {
+              throw new Error(data.error || 'Erro desconhecido ao gerar o link.');
+            }
+          })
+          .catch(function (err) {
+            setFeedback('❌ ' + err.message + ' Tente novamente.', 'error');
+            btnEnviar.disabled    = false;
+            btnEnviar.innerHTML   = 'Ir para o pagamento <span class="btn-icon" aria-hidden="true">→</span>';
+          });
+      });
+
+      // Também submete com Enter nos campos
+      [fNome, fEmail, fCpf].forEach(function (input) {
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') { e.preventDefault(); btnEnviar.click(); }
+        });
+      });
+
+      // ── Helpers ───────────────────────────────────────────────
+      function setFeedback(msg, tipo) {
+        feedback.textContent  = msg;
+        feedback.className    = tipo || '';
+      }
+      function resetFeedback() {
+        feedback.textContent = '';
+        feedback.className   = '';
+        btnEnviar.disabled   = false;
+        btnEnviar.innerHTML  = 'Ir para o pagamento <span class="btn-icon" aria-hidden="true">→</span>';
+        fNome.value  = '';
+        fEmail.value = '';
+        fCpf.value   = '';
+      }
     }());
 
   </script>
